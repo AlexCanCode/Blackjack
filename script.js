@@ -38,7 +38,26 @@ let game = {
     }
   },
   sum: function(arr){
-     	return arr.reduce((all, item) =>	all += item);
+     	const sumHand = arr.reduce((all, item) =>	all += item);
+      if(sumHand <= 21){
+        return sumHand;
+      }
+      else if(arr.includes(11)){
+        if(arr === this.plCards){
+              this.plCards = this.plCards.filter(element => element === 11 ? false : true);
+              this.plCards.push(1);
+              return this.plCards.reduce((all, item) =>  all += item);//should I be using recursion here? returning sum(this.plCards);?
+          }
+          else if(arr === this.dlCards){
+              this.dlCards = this.dlCards.filter(element => element === 11 ? false : true);
+              this.dlCards.push(1);
+              return this.dlCards.reduce((all, item) =>  all += item);
+          }
+        
+      }
+      else{
+        return sumHand;
+      }
     }, 
   dlTurn: function (){
       if(this.sum(this.plCards)> 21){
@@ -181,6 +200,8 @@ let game = {
         }
     }
 };*/
+
+///upon winner or blackjack - should disable buttons - can currently hit them 
 
 
 
