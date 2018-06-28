@@ -119,7 +119,7 @@ let game = {
       return false
     }
   },
-  decider: function(sum1, sum2){//Add event triggers throughout 
+  decider: function(sum1, sum2){
       if(sum2 > sum1 && sum2 <= 21){
         this.result("Dealer Wins with Higher Hand");
         this.winner("dHand");
