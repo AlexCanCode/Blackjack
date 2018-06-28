@@ -1,0 +1,113 @@
+
+/*use playing card generator instead of going through the trouble yourself - will require some re-jiggering of javascript references but will be worth it*/
+* {
+  padding: 0px;
+  margin: 0px;
+  background: #008000;
+  font-family: arial;
+}
+
+:root {
+  --card-margin: .2em;
+  --card-width: 9em;
+  --card-height: 12.6em;
+  --card-border-radius: .2em;
+}
+
+#top{
+  margin: 1em;
+  text-align: center;
+  color: #800000;
+}
+
+#game-div {
+  text-align: center;
+  }
+
+.Hand {
+  display: inline-block;
+  margin: var(--card-margin);
+  border: solid;
+  border-width: .1em;
+  width: var(--card-width);
+  height: var(--card-height);
+  line-height: var(--card-height);
+  border-radius: var(--card-border-radius);
+  background: white;
+  overflow: auto;
+}
+
+.hand-headings{
+  margin: 0px;
+  padding: 0px;
+ 
+}
+
+#bust{
+  margin: .25em;
+  color: red;
+  visibility: hidden;
+}
+
+h4 {
+  color: #daa520;
+  font-size: 1.5em;
+}
+
+button{
+  width: 5em;
+  height: 2.5em;
+  margin: .5em;
+  border: solid;
+  border-radius: .5em;
+  background: #800000;
+  color: #e5e5e5;
+  font-family: garmound;
+  font-size: 1.25em;
+  outline: none;
+}
+
+button:hover {
+  background: #700000;
+}
+
+.winningHand {
+  display: inline-block;
+  margin: var(--card-margin);
+  border: solid;
+  border-width: .25em;
+  border-color: #800000;
+  width: var(--card-width);
+  height: var(--card-height);
+  line-height: var(--card-height);
+  border-radius: var(--card-border-radius);
+  background: white;
+  overflow: auto;
+}
+
+#divider{
+  height: 4em;
+}
+
+#display{
+  text-align: center;
+   }
+
+button:active{
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+#logger{
+  height: 5em;
+}
+
+#log{
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: bold;
+  line-height: 5em;
+  color: #800000;
+  font-size: 2em;
+}
+
