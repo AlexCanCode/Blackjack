@@ -175,13 +175,15 @@ let game = {
   for(i = 0; i < (handDiv.length); i++){
     handDiv[i].className = "winningHand";
   }
+},
+doubleDown: function(){
+  game.hit(this.plCards, 'pHand');
+  game.dlTurn();
 }
   
 }
 
 //See Animation section of FCC to figure out how to have card animations 
-
-//Need to write seperate logic for blackjacks vs having 21 and then need to seperate out the bust checker from the blackjack checker as if someone has 21 but not blackjack, the dealer will continue to their hand 
 
 //hide one dealer card
 
@@ -189,19 +191,9 @@ let game = {
 
 // add win or losing event that handles what is currenlty console logged for the decider 
 
-/*function logging() {
-    var old = console.log;
-    var logger = document.getElementById('log');
-    console.log = function (message) {
-        if (typeof message == 'object') {
-            logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
-        } else {
-            logger.innerHTML += message + '<br />';
-        }
-    }
-};*/
+///upon winner or blackjack - should disable buttons - can currently hit them - 
 
-///upon winner or blackjack - should disable buttons - can currently hit them 
+//Add betting
 
 
 
