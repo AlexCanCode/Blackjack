@@ -7,8 +7,22 @@ let cardNames = {1: "Ace", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six",
 let game = {
  	plCards: [],
   dlCards: [],
-  result: function (text){
+  pBank: 1500,
+  //bet: document.getElementById("bet-amount").value, LEFT OFF HERE - GETTING VALUE OF BET ON PAGE - need t do more reserach, may not need a seperate bet variable because I might be able to just grab it within whatever funciton its used form. Things to consider. 
+  setpBank: function(num){
+      document.getElementById("pBank-num").innerHTML = this.pBank;
+  },
+  result: function (num, text){
     document.getElementById("log").innerHTML = text;
+    if(num === 0){
+      console.log("player gives things");
+    }
+    else if(num === 1){
+      console.log("player gets things");
+    }
+    else if(num === 2){
+      console.log("nobody gets anything!")
+    }
   },
   deal: function(){
       if(this.plCards.length > 0){
@@ -23,7 +37,7 @@ let game = {
      document.getElementById("pCardTwo").innerHTML = game.plCards[1];
      document.getElementById("dCardOne").innerHTML = game.dlCards[0];
      document.getElementById("dCardTwo").innerHTML = game.dlCards[1];
-     this.bjDecider(this.sum(this.plCards),          this.sum(this.dlCards))
+     this.bjDecider(this.sum(this.plCards),this.sum(this.dlCards));
       }
     },
   hit: function(arr, hand) {//Prevent Hit before deal (hide button?)
@@ -53,7 +67,6 @@ let game = {
               this.dlCards.push(1);
               return this.dlCards.reduce((all, item) =>  all += item);
           }
-        
       }
       else{
         return sumHand;
@@ -118,20 +131,16 @@ let game = {
   random: function(){
     return deck[Math.floor(Math.random() * 13)];
   },
-  bustText: function (str){//SHOULD just turn this into a "result" function that declares the outcome win or lose and then indicates the outcome by changing styling to winning or losing hand (or both with red being losing and green being winning - use border around cards?)
-  this.busted.innerHTML = str + " Busts!";
-  this.busted.style.visibility = "visible";
-  },
   bjDecider: function (sum1, sum2){// IMPORTANT: change results for each conditional to trigger winner function
     if(sum1 === 21 && sum2 === 21){
-      this.result("Push");
+      this.result(2,"Push");
       }
     else if(sum1 === 21){
-      this.result("BlackJack! You Win!");
+      this.result(1, "BlackJack! You Win!");
       this.winner("pHand");
     }
     else if(sum2 === 21){
-      this.result("Dealer Wins with BlackJack");
+      this.result(0, "Dealer Wins with BlackJack");
       this.winner("dHand");
     }
     else {//DO I NEED THIS OR CAN I JUST HAVE IT DO NOTHING? 
@@ -140,19 +149,19 @@ let game = {
   },
   decider: function(sum1, sum2){
       if(sum2 > sum1 && sum2 <= 21){
-        this.result("Dealer Wins with Higher Hand");
+        this.result(0, "Dealer Wins with Higher Hand");
         this.winner("dHand");
       }
       else if(sum2 >= 17 && sum2 <= 21){
         if(sum1 === sum2){
-          this.result("Push")
+          this.result(2, "Push")
         }
         else if(sum1 > sum2 && sum1 <= 21){
-          this.result("You Win with Higher Hand");
+          this.result(1, "You Win with Higher Hand");
           this.winner("pHand");
         }
         else if(sum2 > sum1 && sum2 <= 21){
-          this.result("Dealer Wins with Higher Hand");
+          this.result(0, "Dealer Wins with Higher Hand");
           this.winner("dHand");
         }
       }
@@ -162,26 +171,28 @@ let game = {
 }, 
   bustCheck: function(sum1, sum2){//must write end game onto this function as this automatically ends the game
     if(sum1 > 21){
-      this.result("You Busted, Dealer Wins");
+      this.result(0, "You Busted, Dealer Wins");
       this.winner("dHand");
     }
     else if(sum2 > 21){
-      this.result("Dealer Busts, You Win!");
+      this.result(1, "Dealer Busts, You Win!");
       this.winner("pHand");
     }
 }, 
-  winner: function(handName){
+  winner: function(handName){//can fold into the result function
   const handDiv= document.getElementById(handName).children;
   for(i = 0; i < (handDiv.length); i++){
     handDiv[i].className = "winningHand";
   }
 },
 doubleDown: function(){
-  game.hit(this.plCards, 'pHand');
+  game.hit(this.plCards, 'pHand');//need to double-down the bet once betting is added*****
   game.dlTurn();
 }
   
 }
+
+
 
 //See Animation section of FCC to figure out how to have card animations 
 
@@ -191,9 +202,13 @@ doubleDown: function(){
 
 // add win or losing event that handles what is currenlty console logged for the decider 
 
-///upon winner or blackjack - should disable buttons - can currently hit them - 
+///upon winner or blackjack - should disable buttons - can currently hit them - could create a "game over" state that disables or hides all but the deal buttons 
 
-//Add betting
+//Add betting - should include deciding how much to bet
+
+//needs to include zeroing out and ending the game at that point
+
+//How do I remember who visited the site and keep their bankroll the same? Is this possible? 
 
 
 
