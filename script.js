@@ -8,9 +8,9 @@ let game = {
  	plCards: [],
   dlCards: [],
   pBank: 1500,
-  //bet: document.getElementById("bet-amount").value, LEFT OFF HERE - GETTING VALUE OF BET ON PAGE - need t do more reserach, may not need a seperate bet variable because I might be able to just grab it within whatever funciton its used form. Things to consider. 
-  setpBank: function(num){
-      document.getElementById("pBank-num").innerHTML = this.pBank;
+  bet: 0, 
+  setpBank: function(){
+      document.getElementById("pBank-num").innerHTML = "HELLOdsaf";
   },
   result: function (num, text){
     document.getElementById("log").innerHTML = text;
@@ -37,19 +37,20 @@ let game = {
      document.getElementById("pCardTwo").innerHTML = game.plCards[1];
      document.getElementById("dCardOne").innerHTML = game.dlCards[0];
      document.getElementById("dCardTwo").innerHTML = game.dlCards[1];
+     game.bet = document.getElementById("bet-amount").value;
      this.bjDecider(this.sum(this.plCards),this.sum(this.dlCards));
       }
     },
   hit: function(arr, hand) {//Prevent Hit before deal (hide button?)
-      	 if(this.plCards.length === 0){
-        return false
-      }
-    else {
-        const newNum = this.random();
-        arr.push(newNum);
-        game.newCards(newNum, hand);
-        this.bustCheck(this.sum(this.plCards), this.sum(this.dlCards))
-    }
+          	 if(this.plCards.length === 0){
+            return false
+            }
+            else {
+            const newNum = this.random();
+            arr.push(newNum);
+            game.newCards(newNum, hand);
+            this.bustCheck(this.sum(this.plCards), this.sum(this.dlCards))
+        }
   },
   sum: function(arr){
      	const sumHand = arr.reduce((all, item) =>	all += item);
@@ -76,14 +77,14 @@ let game = {
       if(this.sum(this.plCards)> 21){
         return false
       }
-      else {
-     while (this.sum(this.dlCards) < 17){
-         game.hit(this.dlCards, "dHand");
-         }
-      this.decider(this.sum(this.plCards), this.sum(this.dlCards));
-      }
+         else {
+         while (this.sum(this.dlCards) < 17){
+           game.hit(this.dlCards, "dHand");
+           }
+        this.decider(this.sum(this.plCards), this.sum(this.dlCards));
+        }
     },
-  newCards: function(num, hand){//May need to change later to reuse old removed nodes for performance purposes
+newCards: function(num, hand){//May need to change later to reuse old removed nodes for performance purposes
   let newP = document.createElement('p');
   newP.setAttribute("class", "Hand");
 
@@ -101,32 +102,32 @@ let game = {
     return nChild.length
   }, 
   zeroOut: function(hand){ 
-      let eCards = document.getElementById(hand).children;
-      let eHand = document.getElementById(hand);
-     if(eCards.length === 2){
-      this.plCards.length = 0;
-      this.dlCards.length = 0;
-      document.getElementById("pCardOne").innerHTML = "";
-      document.getElementById("pCardTwo").innerHTML = "";
-      document.getElementById("dCardOne").innerHTML = "";
-      document.getElementById("dCardTwo").innerHTML = "";
-    }
-    else {
-      
-      for(i= (eCards.length-1); i > 1; i--){
-        eHand.removeChild(eCards[i]);
-      }
-      this.plCards.length = 0;
-      this.dlCards.length = 0;
-      document.getElementById("pCardOne").innerHTML = "";
-      document.getElementById("pCardTwo").innerHTML = "";
-      document.getElementById("dCardOne").innerHTML = "";
-      document.getElementById("dCardTwo").innerHTML = "";
-    }
-    document.getElementById("pCardOne").className = "Hand";
-    document.getElementById("pCardTwo").className = "Hand";
-    document.getElementById("dCardOne").className = "Hand";
-    document.getElementById("dCardTwo").className = "Hand";
+        let eCards = document.getElementById(hand).children;
+        let eHand = document.getElementById(hand);
+       if(eCards.length === 2){
+        this.plCards.length = 0;
+        this.dlCards.length = 0;
+        document.getElementById("pCardOne").innerHTML = "";
+        document.getElementById("pCardTwo").innerHTML = "";
+        document.getElementById("dCardOne").innerHTML = "";
+        document.getElementById("dCardTwo").innerHTML = "";
+        }
+        else {
+        
+        for(i= (eCards.length-1); i > 1; i--){
+          eHand.removeChild(eCards[i]);
+        }
+        this.plCards.length = 0;
+        this.dlCards.length = 0;
+        document.getElementById("pCardOne").innerHTML = "";
+        document.getElementById("pCardTwo").innerHTML = "";
+        document.getElementById("dCardOne").innerHTML = "";
+        document.getElementById("dCardTwo").innerHTML = "";
+        }
+        document.getElementById("pCardOne").className = "Hand";
+        document.getElementById("pCardTwo").className = "Hand";
+        document.getElementById("dCardOne").className = "Hand";
+        document.getElementById("dCardTwo").className = "Hand";
   }, 
   random: function(){
     return deck[Math.floor(Math.random() * 13)];
@@ -138,6 +139,7 @@ let game = {
     else if(sum1 === 21){
       this.result(1, "BlackJack! You Win!");
       this.winner("pHand");
+      game.pBank -= game.bet;
     }
     else if(sum2 === 21){
       this.result(0, "Dealer Wins with BlackJack");
@@ -179,7 +181,7 @@ let game = {
       this.winner("pHand");
     }
 }, 
-  winner: function(handName){//can fold into the result function
+winner: function(handName){//can fold into the result function
   const handDiv= document.getElementById(handName).children;
   for(i = 0; i < (handDiv.length); i++){
     handDiv[i].className = "winningHand";
@@ -188,10 +190,14 @@ let game = {
 doubleDown: function(){
   game.hit(this.plCards, 'pHand');//need to double-down the bet once betting is added*****
   game.dlTurn();
+},
+pBankSet: function(num){
+
 }
   
 }
 
+game.setpBank();
 
 
 //See Animation section of FCC to figure out how to have card animations 
