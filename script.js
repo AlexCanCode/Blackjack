@@ -9,9 +9,6 @@ let game = {
   dlCards: [],
   pBank: 1500,
   bet: 0, 
-  setpBank: function(){
-      document.getElementById("pBank-num").innerHTML = "HELLOdsaf";
-  },
   result: function (num, text){
     document.getElementById("log").innerHTML = text;
     if(num === 0){
@@ -197,7 +194,7 @@ pBankSet: function(num){
   
 }
 
-game.setpBank();
+
 
 
 //See Animation section of FCC to figure out how to have card animations 

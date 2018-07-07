@@ -43,7 +43,7 @@
 
   <div id="betting-container">
     <div id="pBank">
-      <p id="pBank-num" onload="game.setpBank()"></p><!--LEFT OFF HERE - Need to get this event to fire after load-->
+      <p id="pBank-num"></p>
     </div>   
     <form id="betting-form">
       Bet
@@ -55,6 +55,9 @@
   </div>
 
 </body>
+<script> 
+      document.getElementById("pBank-num").innerHTML =  game.pBank;
+  </script>
 </html>
 
 
