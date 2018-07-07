@@ -4,22 +4,23 @@ let cardNames = {1: "Ace", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six",
 }, faceCards: ["Ten", "Jack", "Queen", "King"]};
 
 
-let game = {
+let game = { 
  	plCards: [],
   dlCards: [],
   pBank: 1500,
   bet: 0, 
   result: function (num, text){
-    document.getElementById("log").innerHTML = text;
+    document.getElementById("log").innerHTML = text; //UPDATE for blackjack to give 3:2 to player 
     if(num === 0){
-      console.log("player gives things");
+      game.pBank -= game.bet;
     }
     else if(num === 1){
-      console.log("player gets things");
+      game.pBank += game.bet;
     }
     else if(num === 2){
       console.log("nobody gets anything!")
     }
+    document.getElementById("pBank-num").innerHTML =  game.pBank;
   },
   deal: function(){
       if(this.plCards.length > 0){
@@ -203,11 +204,7 @@ pBankSet: function(num){
 
 //add sum display 
 
-// add win or losing event that handles what is currenlty console logged for the decider 
-
 ///upon winner or blackjack - should disable buttons - can currently hit them - could create a "game over" state that disables or hides all but the deal buttons 
-
-//Add betting - should include deciding how much to bet
 
 //needs to include zeroing out and ending the game at that point
 
