@@ -10,16 +10,17 @@ let game = {
   pBank: 1500,
   bet: 0, 
   result: function (num, text){
-    document.getElementById("log").innerHTML = text; //UPDATE for blackjack to give 3:2 to player 
+    document.getElementById("log").innerHTML = text; 
     if(num === 0){
       game.pBank -= game.bet;
     }
     else if(num === 1){
-      game.pBank += game.bet;
+      game.pBank += parseInt(game.bet);
     }
-    else if(num === 2){
-      console.log("nobody gets anything!")
+    else if(num === 3){
+      game.pBank += parseInt((game.bet * 1.5));
     }
+
     document.getElementById("pBank-num").innerHTML =  game.pBank;
   },
   deal: function(){
@@ -59,7 +60,7 @@ let game = {
         if(arr === this.plCards){
               this.plCards = this.plCards.filter(element => element === 11 ? false : true);
               this.plCards.push(1);
-              return this.plCards.reduce((all, item) =>  all += item);//should I be using recursion here? returning sum(this.plCards);?
+              return this.plCards.reduce((all, item) =>  all += item);
           }
           else if(arr === this.dlCards){
               this.dlCards = this.dlCards.filter(element => element === 11 ? false : true);
@@ -135,9 +136,8 @@ newCards: function(num, hand){//May need to change later to reuse old removed no
       this.result(2,"Push");
       }
     else if(sum1 === 21){
-      this.result(1, "BlackJack! You Win!");
+      this.result(3, "BlackJack! You Win!");
       this.winner("pHand");
-      game.pBank -= game.bet;
     }
     else if(sum2 === 21){
       this.result(0, "Dealer Wins with BlackJack");
@@ -186,8 +186,10 @@ winner: function(handName){//can fold into the result function
   }
 },
 doubleDown: function(){
+  game.bet = (game.bet * 2);
   game.hit(this.plCards, 'pHand');//need to double-down the bet once betting is added*****
   game.dlTurn();
+  game.bet = (game.bet/2);
 },
 pBankSet: function(num){
 
@@ -196,7 +198,11 @@ pBankSet: function(num){
 }
 
 
+//Should not be able to hit reset button in the middle of the game - hide, or disable while game is played 
 
+//should only be able to hit doubledown on the first card, right? 
+
+//need to add something to happen when pbank hits 0 - need to restart 
 
 //See Animation section of FCC to figure out how to have card animations 
 
@@ -209,6 +215,8 @@ pBankSet: function(num){
 //needs to include zeroing out and ending the game at that point
 
 //How do I remember who visited the site and keep their bankroll the same? Is this possible? 
+
+//how do I hide the inputs from users to prevent manipulation? 
 
 
 
