@@ -218,6 +218,7 @@ pBankSet: function(num){
 
 //how do I hide the inputs from users to prevent manipulation? 
 
+//connect to CSS card library via internet as opposed to within the repository  
 
 
 
