@@ -1,7 +1,5 @@
-const deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]//need to build in Ace handling, should I put this in the game object? 
-let cardNames = {1: "Ace", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", fCardPicker: function(){ 
-    return cardNames.faceCards[(Math.floor(Math.random() * 4))]
-}, faceCards: ["Ten", "Jack", "Queen", "King"]};
+const deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+const suits = {"spades": "♠", "diamonds": "♦", "clubs": "♣", "hearts": "♥"};
 
 
 let game = { 
@@ -32,10 +30,10 @@ let game = {
       this.plCards.push(this.random());
       this.dlCards.push(this.random());
       };
-     document.getElementById("pCardOne").innerHTML = game.plCards[0];// CHANGE: Make this more scaleable. Doing it by ID is not best practice. template literals may help here.
-     document.getElementById("pCardTwo").innerHTML = game.plCards[1];
-     document.getElementById("dCardOne").innerHTML = game.dlCards[0];
-     document.getElementById("dCardTwo").innerHTML = game.dlCards[1];
+     document.getElementById("dCardOne").innerHTML = "<span>" + (this.deckRender(game.dlCards[0])) + (suits[(this.getSuit())]) + "</span>";
+     document.getElementById("dCardTwo").innerHTML = "<span>" + (this.deckRender(game.dlCards[1])) + (suits[(this.getSuit())]) + "</span>";
+     document.getElementById("pCardOne").innerHTML = "<span>" + (this.deckRender(game.plCards[0])) + (suits[(this.getSuit())]) + "</span>";
+     document.getElementById("pCardTwo").innerHTML = "<span>" + (this.deckRender(game.plCards[1])) + (suits[(this.getSuit())]) + "</span>";
      game.bet = document.getElementById("bet-amount").value;
      this.bjDecider(this.sum(this.plCards),this.sum(this.dlCards));
       }
@@ -47,7 +45,7 @@ let game = {
             else {
             const newNum = this.random();
             arr.push(newNum);
-            game.newCards(newNum, hand);
+            game.newCards(newNum, hand, this.getSuit());
             this.bustCheck(this.sum(this.plCards), this.sum(this.dlCards))
         }
   },
@@ -83,15 +81,29 @@ let game = {
         this.decider(this.sum(this.plCards), this.sum(this.dlCards));
         }
     },
-newCards: function(num, hand){//May need to change later to reuse old removed nodes for performance purposes
+newCards: function(num, hand, suit){//May need to change later to reuse old removed nodes for performance purposes
   let newP = document.createElement('p');
+  let newS = document.createElement('span');
   newP.setAttribute("class", "Hand");
 
-  let node = document.createTextNode(num);
-  newP.appendChild(node); 
+  let node = document.createTextNode((game.deckRender(num)) + ((suits[suit])));
+  newS.appendChild(node);
+  newP.appendChild(newS); 
   let element = document.getElementById(hand);
   element.appendChild(newP);
   },
+  deckRender: function(num){
+  if (num < 10){
+    return num
+  }
+  else {
+    if (num == 10){
+      const faceCards = ["J", "Q", "K"]
+      return faceCards[Math.floor(Math.random() * 2)];
+    }
+    else return "A";
+  }
+},
   reset: function(){ 
       this.zeroOut('pHand');
       this.zeroOut('dHand');
@@ -193,6 +205,11 @@ doubleDown: function(){
 },
 pBankSet: function(num){
 
+}, 
+
+getSuit: function(){
+  const suitChoice = ["spades", "diamonds", "clubs", "hearts"]
+  return suitChoice[Math.floor(Math.random() * 3)];
 }
   
 }
