@@ -135,3 +135,8 @@ button:active{
   line-height: .85em;
   overflow: hidden;
 }
+
+#dCardOne {
+  background: url("C:/Users/arichards/Documents/P Files/Learning/Projects/BlackJack/img/cardBack.jpg");
+  background-size: cover;
+}

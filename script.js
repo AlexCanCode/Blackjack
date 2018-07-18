@@ -30,7 +30,6 @@ let game = {
       this.plCards.push(this.random());
       this.dlCards.push(this.random());
       };
-     this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne"); //May need to account for suit color here
      this.addCardValues(this.deckRender(game.dlCards[1]), (suits[this.getSuit()]), "#dCardTwo"); 
      this.addCardValues(this.deckRender(game.plCards[0]), (suits[this.getSuit()]), "#pCardOne"); 
      this.addCardValues(this.deckRender(game.plCards[1]), (suits[this.getSuit()]), "#pCardTwo"); 
@@ -43,6 +42,11 @@ let game = {
         const cardVals = document.querySelector(location).querySelectorAll('.cardVal');
         cardVals[0].innerHTML = value + "<br>" + suit;
         cardVals[1].innerHTML = suit + "<br>" + value;
+
+        if(suit == "♥" || suit == "♦"){
+          cardVals[0].style.color = "red";
+          cardVals[1].style.color = "red";
+        }
   },
   hit: function(arr, hand) {//Prevent Hit before deal (hide button?)
           	 if(this.plCards.length === 0){
@@ -87,7 +91,7 @@ let game = {
         this.decider(this.sum(this.plCards), this.sum(this.dlCards));
         }
     },
-newCards: function(num, hand, suit){//**** This is messy. Investigate a better way to do this - object constructor? Make sure it is supportable accross browsers
+newCards: function(num, hand, suit){//**** This is messy. Investigate a better way to do this - Make sure it is supportable accross browsers
   const handCont = document.getElementById(hand);
   const divHand = document.createElement("div")
   const divOne = document.createElement("div");
@@ -100,6 +104,11 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
   divOne.setAttribute("class", "card1 cardVal")
   divTwo.setAttribute("class", "card2")
   divThree.setAttribute("class", "card3 cardVal")
+
+   if(suit == "hearts" || suit == "diamonds"){
+      divOne.style.color = "red";
+      divThree.style.color = "red";
+          }
 
   const nodeNum = document.createTextNode((game.deckRender(num)));
   const nodeSuit = document.createTextNode(suits[suit]);
@@ -121,6 +130,8 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
 
   handCont.appendChild(divHand);
    
+  
+
 
   },
   deckRender: function(num){
@@ -139,6 +150,7 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
       this.zeroOut('pHand');
       this.zeroOut('dHand');
       document.querySelectorAll(".winningHand").forEach(x => x.className = "hand");
+      document.querySelectorAll(".cardVal").forEach(x => x.style.color = "black");
       document.getElementById('log').innerHTML = "" //Resets on-screen info log
   }, 
   delete: function(nChild, nParent){
@@ -219,7 +231,6 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
 }, 
 winner: function(handName){//can fold into the result function
   const handDiv= document.getElementById(handName).children;
-  console.log(handDiv);
   for(i = 0; i < (handDiv.length); i++){
     handDiv[i].className = "hand winningHand";
   }
