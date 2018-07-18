@@ -1,5 +1,7 @@
 
-/*Style winninghand and Hand the same*/
+/*Make Suits differnt color
+Try to center number/letter with Suit better - for instance Aces do not center on suit*/
+
 * {
   padding: 0px;
   margin: 0px;
@@ -25,7 +27,7 @@
   }
 
 
-.Hand {
+.hand {
   display: inline-block;
   padding: .5em;
   border: solid;
@@ -36,23 +38,12 @@
   border-radius: var(--card-border-radius);
   background: white;
   overflow: hidden;
-}
+ }
 
 .hand-headings{
   margin: 0px;
   padding: 0px;
  
-}
-
-span {
-  background: white;
-  font-size: 1.5em;
-}
-
-#bust{
-  margin: .25em;
-  color: red;
-  visibility: hidden;
 }
 
 h4 {
@@ -78,17 +69,9 @@ button:hover {
 }
 
 .winningHand {
-  display: inline-block;
-  margin: var(--card-margin);
   border: solid;
   border-width: .25em;
   border-color: #800000;
-  width: var(--card-width);
-  height: var(--card-height);
-  line-height: var(--card-height);
-  border-radius: var(--card-border-radius);
-  background: white;
-  overflow: hidden;
 }
 
 #divider{
@@ -121,3 +104,34 @@ button:active{
   color: #800000;
 }
 
+
+.hand div{
+  background: white;
+}
+
+
+.card1 {
+  margin-left: 5%;
+  margin-top: 3%;
+  height: 30%;
+  font-size: 1.5em;
+  line-height: .75em;
+}
+
+.card2 {
+  text-align: center;
+  font-size: 1.5em;
+  height: 47%;
+  line-height: .75em;
+}
+
+.card3 {
+  text-align: right;
+  background: red;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  height: 20%;
+  font-size: 1.5em;
+  line-height: .85em;
+  overflow: hidden;
+}

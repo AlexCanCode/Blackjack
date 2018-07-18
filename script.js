@@ -30,14 +30,20 @@ let game = {
       this.plCards.push(this.random());
       this.dlCards.push(this.random());
       };
-     document.getElementById("dCardOne").innerHTML = "<span>" + (this.deckRender(game.dlCards[0])) + (suits[(this.getSuit())]) + "</span>";
-     document.getElementById("dCardTwo").innerHTML = "<span>" + (this.deckRender(game.dlCards[1])) + (suits[(this.getSuit())]) + "</span>";
-     document.getElementById("pCardOne").innerHTML = "<span>" + (this.deckRender(game.plCards[0])) + (suits[(this.getSuit())]) + "</span>";
-     document.getElementById("pCardTwo").innerHTML = "<span>" + (this.deckRender(game.plCards[1])) + (suits[(this.getSuit())]) + "</span>";
+     this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne"); //May need to account for suit color here
+     this.addCardValues(this.deckRender(game.dlCards[1]), (suits[this.getSuit()]), "#dCardTwo"); 
+     this.addCardValues(this.deckRender(game.plCards[0]), (suits[this.getSuit()]), "#pCardOne"); 
+     this.addCardValues(this.deckRender(game.plCards[1]), (suits[this.getSuit()]), "#pCardTwo"); 
+  
      game.bet = document.getElementById("bet-amount").value;
      this.bjDecider(this.sum(this.plCards),this.sum(this.dlCards));
       }
     },
+  addCardValues: function(value, suit, location){
+        const cardVals = document.querySelector(location).querySelectorAll('.cardVal');
+        cardVals[0].innerHTML = value + "<br>" + suit;
+        cardVals[1].innerHTML = suit + "<br>" + value;
+  },
   hit: function(arr, hand) {//Prevent Hit before deal (hide button?)
           	 if(this.plCards.length === 0){
             return false
@@ -81,16 +87,41 @@ let game = {
         this.decider(this.sum(this.plCards), this.sum(this.dlCards));
         }
     },
-newCards: function(num, hand, suit){//May need to change later to reuse old removed nodes for performance purposes
-  let newP = document.createElement('p');
-  let newS = document.createElement('span');
-  newP.setAttribute("class", "Hand");
+newCards: function(num, hand, suit){//**** This is messy. Investigate a better way to do this - object constructor? Make sure it is supportable accross browsers
+  const handCont = document.getElementById(hand);
+  const divHand = document.createElement("div")
+  const divOne = document.createElement("div");
+  const divTwo = document.createElement("div");
+  const divThree = document.createElement("div");
+  const brkOne = document.createElement("br");
+  const brkTwo = document.createElement("br");
+  
+  divHand.setAttribute("class", "hand")
+  divOne.setAttribute("class", "card1 cardVal")
+  divTwo.setAttribute("class", "card2")
+  divThree.setAttribute("class", "card3 cardVal")
 
-  let node = document.createTextNode((game.deckRender(num)) + ((suits[suit])));
-  newS.appendChild(node);
-  newP.appendChild(newS); 
-  let element = document.getElementById(hand);
-  element.appendChild(newP);
+  const nodeNum = document.createTextNode((game.deckRender(num)));
+  const nodeSuit = document.createTextNode(suits[suit]);
+
+  divOne.appendChild(nodeNum);
+  divOne.appendChild(brkOne);
+  divOne.appendChild(nodeSuit);
+
+  const nodeNumTwo = document.createTextNode((game.deckRender(num)));
+  const nodeSuitTwo = document.createTextNode(suits[suit]);
+
+  divThree.appendChild(nodeSuitTwo);
+  divThree.appendChild(brkTwo);
+  divThree.appendChild(nodeNumTwo);
+
+  divHand.appendChild(divOne);
+  divHand.appendChild(divTwo);
+  divHand.appendChild(divThree);
+
+  handCont.appendChild(divHand);
+   
+
   },
   deckRender: function(num){
   if (num < 10){
@@ -107,7 +138,8 @@ newCards: function(num, hand, suit){//May need to change later to reuse old remo
   reset: function(){ 
       this.zeroOut('pHand');
       this.zeroOut('dHand');
-      document.getElementById('log').innerHTML = "" //FOR DEMO PRUPOSES ONLY - REMOVE     
+      document.querySelectorAll(".winningHand").forEach(x => x.className = "hand");
+      document.getElementById('log').innerHTML = "" //Resets on-screen info log
   }, 
   delete: function(nChild, nParent){
     return nChild.length
@@ -115,13 +147,13 @@ newCards: function(num, hand, suit){//May need to change later to reuse old remo
   zeroOut: function(hand){ 
         let eCards = document.getElementById(hand).children;
         let eHand = document.getElementById(hand);
+
+        document.querySelectorAll(".cardVal").forEach(x => x.innerHTML = "");
        if(eCards.length === 2){
         this.plCards.length = 0;
         this.dlCards.length = 0;
-        document.getElementById("pCardOne").innerHTML = "";
-        document.getElementById("pCardTwo").innerHTML = "";
-        document.getElementById("dCardOne").innerHTML = "";
-        document.getElementById("dCardTwo").innerHTML = "";
+        
+        
         }
         else {
         
@@ -130,15 +162,9 @@ newCards: function(num, hand, suit){//May need to change later to reuse old remo
         }
         this.plCards.length = 0;
         this.dlCards.length = 0;
-        document.getElementById("pCardOne").innerHTML = "";
-        document.getElementById("pCardTwo").innerHTML = "";
-        document.getElementById("dCardOne").innerHTML = "";
-        document.getElementById("dCardTwo").innerHTML = "";
+        
         }
-        document.getElementById("pCardOne").className = "Hand";
-        document.getElementById("pCardTwo").className = "Hand";
-        document.getElementById("dCardOne").className = "Hand";
-        document.getElementById("dCardTwo").className = "Hand";
+        
   }, 
   random: function(){
     return deck[Math.floor(Math.random() * 13)];
@@ -193,8 +219,9 @@ newCards: function(num, hand, suit){//May need to change later to reuse old remo
 }, 
 winner: function(handName){//can fold into the result function
   const handDiv= document.getElementById(handName).children;
+  console.log(handDiv);
   for(i = 0; i < (handDiv.length); i++){
-    handDiv[i].className = "winningHand";
+    handDiv[i].className = "hand winningHand";
   }
 },
 doubleDown: function(){
@@ -203,17 +230,17 @@ doubleDown: function(){
   game.dlTurn();
   game.bet = (game.bet/2);
 },
-pBankSet: function(num){
 
-}, 
 
 getSuit: function(){
-  const suitChoice = ["spades", "diamonds", "clubs", "hearts"]
+  const suitChoice = ["spades", "diamonds", "clubs", "hearts"] // this feels redundent - may be able to just grab from suit array 
   return suitChoice[Math.floor(Math.random() * 3)];
 }
   
 }
 
+
+//For all button issues - create states for buttons, have button greyed out and inclickable when not supposed to be pressed - also replace reset with delete after win state
 
 //Should not be able to hit reset button in the middle of the game - hide, or disable while game is played 
 
