@@ -181,7 +181,7 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
   random: function(){
     return deck[Math.floor(Math.random() * 13)];
   },
-  bjDecider: function (sum1, sum2){// IMPORTANT: change results for each conditional to trigger winner function
+  bjDecider: function (sum1, sum2){
     if(sum1 === 21 && sum2 === 21){
       this.result(2,"Push");
       }
@@ -219,7 +219,7 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
       return false
     }
 }, 
-  bustCheck: function(sum1, sum2){//must write end game onto this function as this automatically ends the game
+  bustCheck: function(sum1, sum2){
     if(sum1 > 21){
       this.result(0, "You Busted, Dealer Wins");
       this.winner("dHand");
@@ -237,7 +237,7 @@ winner: function(handName){//can fold into the result function
 },
 doubleDown: function(){
   game.bet = (game.bet * 2);
-  game.hit(this.plCards, 'pHand');//need to double-down the bet once betting is added*****
+  game.hit(this.plCards, 'pHand');
   game.dlTurn();
   game.bet = (game.bet/2);
 },
@@ -261,8 +261,6 @@ getSuit: function(){
 
 //See Animation section of FCC to figure out how to have card animations 
 
-//hide one dealer card
-
 //add sum display 
 
 ///upon winner or blackjack - should disable buttons - can currently hit them - could create a "game over" state that disables or hides all but the deal buttons 
@@ -273,7 +271,7 @@ getSuit: function(){
 
 //how do I hide the inputs from users to prevent manipulation? 
 
-//connect to CSS card library via internet as opposed to within the repository  
+
 
 
 
