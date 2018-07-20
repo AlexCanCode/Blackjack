@@ -135,7 +135,16 @@ button:active{
   overflow: hidden;
 }
 
-#dCardOne {
+.cardBack {
   background: url("C:/Users/arichards/Documents/P Files/Learning/Projects/BlackJack/img/cardBack.jpg");
   background-size: cover;
+  border-width: 0px
+  }
+
+button:disabled {
+  opacity: 0.65;
 }
+
+.hidden {
+  visibility: hidden;
+  }

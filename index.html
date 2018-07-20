@@ -17,8 +17,10 @@
     </div>
       <h4 class="hand-headings">Dealer's Cards</h4>
       <div id="dHand">
-        <div id="dCardOne" class="hand">
-         
+        <div id="dCardOne" class="hand cardBack">
+          <div class="card1 cardVal hidden hCard"></div>
+          <div class="card2 hidden hCard"></div>
+          <div class="card3 cardVal hidden hCard"></div>
         </div>
           <div id="dCardTwo" class="hand">
           <div class="card1 cardVal"></div>
@@ -51,8 +53,7 @@
         <button id="deal" type= "button" onclick="javascript: game.deal();"> Deal</button>
         <button id="hit" type= "button" onclick="javascript: game.hit(game.plCards, 'pHand');">Hit</button>
         <button id="stay" type= "button" onclick="javascript: game.dlTurn()">Stay</button>
-        <button id="Double Down" type= "button" onclick="javascript: game.doubleDown()">Double-Down</button>
-       <button id="reset" type= "button" onclick="javascript: game.reset()">Reset</button>
+        <button id="double-down" type= "button" onclick="javascript: game.doubleDown()">Double-Down</button>
     </div>
    
   </div>

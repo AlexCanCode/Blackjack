@@ -23,9 +23,9 @@ let game = {
   },
   deal: function(){
       if(this.plCards.length > 0){
-        return false
+        game.reset();
       }
-      else {
+      
       for(i=1; i < 3; i++){
       this.plCards.push(this.random());
       this.dlCards.push(this.random());
@@ -36,7 +36,7 @@ let game = {
   
      game.bet = document.getElementById("bet-amount").value;
      this.bjDecider(this.sum(this.plCards),this.sum(this.dlCards));
-      }
+      this.toggleDisableStates("gameplay")
     },
   addCardValues: function(value, suit, location){
         const cardVals = document.querySelector(location).querySelectorAll('.cardVal');
@@ -81,6 +81,9 @@ let game = {
       }
     }, 
   dlTurn: function (){
+    document.querySelectorAll(".hidden").forEach(element => element.classList.toggle("hidden"));
+    document.querySelector(".cardBack").classList.toggle("cardBack");
+    this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne"); 
       if(this.sum(this.plCards)> 21){
         return false
       }
@@ -152,6 +155,10 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
       document.querySelectorAll(".winningHand").forEach(x => x.className = "hand");
       document.querySelectorAll(".cardVal").forEach(x => x.style.color = "black");
       document.getElementById('log').innerHTML = "" //Resets on-screen info log
+      if((document.querySelector(".hCard").classList.contains("hidden")) == false){
+      document.querySelectorAll(".hCard").forEach(element => element.classList.toggle("hidden"));
+  }
+      document.querySelector("#dCardOne").classList.toggle("cardBack");
   }, 
   delete: function(nChild, nParent){
     return nChild.length
@@ -184,18 +191,19 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
   bjDecider: function (sum1, sum2){
     if(sum1 === 21 && sum2 === 21){
       this.result(2,"Push");
+      this.toggleDisableStates("start"); //none of these are successfully triggering a state change 
       }
     else if(sum1 === 21){
+      this.toggleDisableStates("start");
       this.result(3, "BlackJack! You Win!");
       this.winner("pHand");
     }
     else if(sum2 === 21){
+      this.toggleDisableStates("start");
       this.result(0, "Dealer Wins with BlackJack");
       this.winner("dHand");
     }
-    else {//DO I NEED THIS OR CAN I JUST HAVE IT DO NOTHING? 
-      return false
-    }
+    
   },
   decider: function(sum1, sum2){
       if(sum2 > sum1 && sum2 <= 21){
@@ -205,6 +213,7 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
       else if(sum2 >= 17 && sum2 <= 21){
         if(sum1 === sum2){
           this.result(2, "Push")
+          this.toggleDisableStates("start");
         }
         else if(sum1 > sum2 && sum1 <= 21){
           this.result(1, "You Win with Higher Hand");
@@ -221,19 +230,25 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
 }, 
   bustCheck: function(sum1, sum2){
     if(sum1 > 21){
+      this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne");
+      document.querySelectorAll(".hidden").forEach(element => element.classList.toggle("hidden"));
       this.result(0, "You Busted, Dealer Wins");
       this.winner("dHand");
     }
     else if(sum2 > 21){
+      this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne");
+      document.querySelectorAll(".hidden").forEach(element => element.classList.toggle("hidden"));
       this.result(1, "Dealer Busts, You Win!");
       this.winner("pHand");
     }
 }, 
 winner: function(handName){//can fold into the result function
+  this.toggleDisableStates("start");
   const handDiv= document.getElementById(handName).children;
   for(i = 0; i < (handDiv.length); i++){
     handDiv[i].className = "hand winningHand";
-  }
+     }
+     
 },
 doubleDown: function(){
   game.bet = (game.bet * 2);
@@ -246,10 +261,29 @@ doubleDown: function(){
 getSuit: function(){
   const suitChoice = ["spades", "diamonds", "clubs", "hearts"] // this feels redundent - may be able to just grab from suit array 
   return suitChoice[Math.floor(Math.random() * 3)];
+}, 
+toggleDisableStates: function(state){
+  if(state == "start"){
+    document.querySelector("#hit").disabled = true;
+    document.querySelector("#stay").disabled = true;
+    document.querySelector("#double-down").disabled = true;
+    document.querySelector("#deal").disabled = false;
+  } 
+  else if(state = "gameplay"){
+    document.querySelector("#hit").disabled = false;
+    document.querySelector("#stay").disabled = false;
+    document.querySelector("#double-down").disabled = false;
+    document.querySelector("#deal").disabled = true;
+  }
+
 }
   
 }
 
+
+
+
+//NEED TO set dealer's card to reveal on win - may need to reimplement HTML and use z-index? 
 
 //For all button issues - create states for buttons, have button greyed out and inclickable when not supposed to be pressed - also replace reset with delete after win state
 
