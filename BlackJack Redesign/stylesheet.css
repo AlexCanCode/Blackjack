@@ -1,0 +1,202 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: verdana;
+
+}
+
+html {
+   background-image: url("C:/Users/arichards/Documents/P Files/Learning/Projects/1 - BlackJack/img/blackjack-background.jpg");
+ background-size: cover;
+}
+
+:root {
+  --card-margin: .2em;
+  --card-width: 9em;
+  --card-height: 12.6em;
+  --card-border-radius: .2em;
+}
+
+#top {
+  color: #800000;
+  text-align: center;
+  margin: 1em;
+}
+
+h4 {
+  color: #daa520;
+  font-size: 1.5em;
+}
+
+#game-container {
+  text-align: center;
+}
+
+.hand {
+  display: inline-block;
+  padding: .5em;
+  border: solid;
+  border-width: .1em;
+  width: var(--card-width);
+  height: var(--card-height);
+  text-align: left;
+  border-radius: var(--card-border-radius);
+  background: white;
+  overflow: hidden;
+ }
+
+.row-container {
+  display: inline-flex;
+  height: 33%;
+  width: 100%;
+}
+
+.left {
+  align-items: center;
+  width: 33%;
+}
+
+.center {
+  text-align: center;
+  width: 34%;
+}
+
+.right {
+  width: 33%;
+}
+
+.sum-box {
+  position: relative;
+  width: 5em;
+  height: 3em;
+  margin-left: auto;
+  margin-right: 10%;
+  margin-top: 15%;;
+  text-align: center;
+  line-height: 50px;
+  background-color: #fff;
+  border: 2px solid #666;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  -webkit-box-shadow: 2px 2px 2px #888;
+  -moz-box-shadow: 2px 2px 2px #888;
+  box-shadow: 2px 2px 2px #888;
+}
+
+button{
+  width: 6.5em;
+  height: 3em;
+  margin: .5em;
+  border: solid;
+  border-radius: .5em;
+  background: #800000;
+  color: #e5e5e5;
+  font-family: garmound;
+  font-size: 1.25em;
+  outline: none;
+}
+
+button:hover {
+  background: #700000;
+}
+
+button:active{
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+button:disabled {
+  opacity: 0.65;
+}
+
+
+#log{
+  text-align: center;
+  font-family: sans-serif;
+  color: #800000;
+  font-size: 1.5em;
+  background: grey; /*change*/
+}
+
+.winningHand {
+  border: solid;
+  border-width: .25em;
+  border-color: #800000;
+}
+
+#pBank-num {
+  color: #800000;
+}
+
+
+.card1 {
+  margin-left: 5%;
+  margin-top: 3%;
+  height: 30%;
+  font-size: 1.5em;
+  line-height: .75em;
+}
+
+.card2 {
+  text-align: center;
+  font-size: 1.5em;
+  height: 47%;
+  line-height: .75em;
+}
+
+.card3 {
+  text-align: right;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  height: 20%;
+  font-size: 1.5em;
+  line-height: .85em;
+  overflow: hidden;
+}
+
+.cardBack {
+  background: url("C:/Users/arichards/Documents/P Files/Learning/Projects/1 - BlackJack/img/cardBack.jpg");
+  background-size: cover;
+  border-width: 0px
+  }
+
+.hidden {
+  visibility: hidden;
+  }
+
+  #betting-container {
+    margin-right: 50%;
+  }
+
+  #bet-amount {
+    -webkit-appearance: none;
+    width: 50%;
+    height: 25px;
+    background: #d3d3d3; /* CHANGE */
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+
+  #bet-amount:hover {
+    opacity: 1;
+  }
+
+  #bet-amount::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+  #bet-amount::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
