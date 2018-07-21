@@ -136,7 +136,7 @@ button:active{
 }
 
 .cardBack {
-  background: url("C:/Users/arichards/Documents/P Files/Learning/Projects/BlackJack/img/cardBack.jpg");
+  background: url("C:/Users/arichards/Documents/P Files/Learning/Projects/1 - BlackJack/img/cardBack.jpg");
   background-size: cover;
   border-width: 0px
   }
@@ -148,3 +148,34 @@ button:disabled {
 .hidden {
   visibility: hidden;
   }
+
+  #bet-amount {
+    -webkit-appearance: none;
+    width: 50%;
+    height: 25px;
+    background: #d3d3d3; /* CHANGE */
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+
+  #bet-amount:hover {
+    opacity: 1;
+  }
+
+  #bet-amount::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+  #bet-amount::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}

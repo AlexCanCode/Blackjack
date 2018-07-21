@@ -26,17 +26,19 @@ let game = {
         game.reset();
       }
       
-      for(i=1; i < 3; i++){
+      
+      this.plCards.push(this.random());
       this.plCards.push(this.random());
       this.dlCards.push(this.random());
-      };
+      this.dlCards.push(this.random());
+      
      this.addCardValues(this.deckRender(game.dlCards[1]), (suits[this.getSuit()]), "#dCardTwo"); 
      this.addCardValues(this.deckRender(game.plCards[0]), (suits[this.getSuit()]), "#pCardOne"); 
      this.addCardValues(this.deckRender(game.plCards[1]), (suits[this.getSuit()]), "#pCardTwo"); 
   
      game.bet = document.getElementById("bet-amount").value;
+     this.toggleDisableStates("gameplay")
      this.bjDecider(this.sum(this.plCards),this.sum(this.dlCards));
-      this.toggleDisableStates("gameplay")
     },
   addCardValues: function(value, suit, location){
         const cardVals = document.querySelector(location).querySelectorAll('.cardVal');
@@ -48,7 +50,7 @@ let game = {
           cardVals[1].style.color = "red";
         }
   },
-  hit: function(arr, hand) {//Prevent Hit before deal (hide button?)
+  hit: function(arr, hand) {
           	 if(this.plCards.length === 0){
             return false
             }
@@ -83,8 +85,9 @@ let game = {
   dlTurn: function (){
     document.querySelectorAll(".hidden").forEach(element => element.classList.toggle("hidden"));
     document.querySelector(".cardBack").classList.toggle("cardBack");
+    this.toggleDisableStates("start");
     this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne"); 
-      if(this.sum(this.plCards)> 21){
+    if(this.sum(this.plCards)> 21){
         return false
       }
          else {
@@ -132,10 +135,6 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
   divHand.appendChild(divThree);
 
   handCont.appendChild(divHand);
-   
-  
-
-
   },
   deckRender: function(num){
   if (num < 10){
@@ -190,17 +189,26 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
   },
   bjDecider: function (sum1, sum2){
     if(sum1 === 21 && sum2 === 21){
+    document.querySelectorAll(".hidden").forEach(element => element.classList.toggle("hidden"));
+    document.querySelector(".cardBack").classList.toggle("cardBack");
+    this.toggleDisableStates("start");
+    this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne");
       this.result(2,"Push");
-      this.toggleDisableStates("start"); //none of these are successfully triggering a state change 
       }
-    else if(sum1 === 21){
-      this.toggleDisableStates("start");
+    else if(sum1 === 21){ 
       this.result(3, "BlackJack! You Win!");
+      document.querySelectorAll(".hidden").forEach(element => element.classList.toggle("hidden"));
+      document.querySelector(".cardBack").classList.toggle("cardBack");
+      this.toggleDisableStates("start");
+      this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne");
       this.winner("pHand");
     }
     else if(sum2 === 21){
-      this.toggleDisableStates("start");
       this.result(0, "Dealer Wins with BlackJack");
+      document.querySelectorAll(".hidden").forEach(element => element.classList.toggle("hidden"));
+      document.querySelector(".cardBack").classList.toggle("cardBack");
+      this.toggleDisableStates("start");
+      this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne");
       this.winner("dHand");
     }
     
@@ -213,7 +221,6 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
       else if(sum2 >= 17 && sum2 <= 21){
         if(sum1 === sum2){
           this.result(2, "Push")
-          this.toggleDisableStates("start");
         }
         else if(sum1 > sum2 && sum1 <= 21){
           this.result(1, "You Win with Higher Hand");
@@ -230,20 +237,21 @@ newCards: function(num, hand, suit){//**** This is messy. Investigate a better w
 }, 
   bustCheck: function(sum1, sum2){
     if(sum1 > 21){
+      this.toggleDisableStates("start");
       this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne");
       document.querySelectorAll(".hidden").forEach(element => element.classList.toggle("hidden"));
       this.result(0, "You Busted, Dealer Wins");
       this.winner("dHand");
     }
     else if(sum2 > 21){
+      this.toggleDisableStates("start");
       this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne");
       document.querySelectorAll(".hidden").forEach(element => element.classList.toggle("hidden"));
       this.result(1, "Dealer Busts, You Win!");
       this.winner("pHand");
     }
 }, 
-winner: function(handName){//can fold into the result function
-  this.toggleDisableStates("start");
+winner: function(handName){
   const handDiv= document.getElementById(handName).children;
   for(i = 0; i < (handDiv.length); i++){
     handDiv[i].className = "hand winningHand";
@@ -251,10 +259,10 @@ winner: function(handName){//can fold into the result function
      
 },
 doubleDown: function(){
-  game.bet = (game.bet * 2);
-  game.hit(this.plCards, 'pHand');
-  game.dlTurn();
-  game.bet = (game.bet/2);
+  this.bet = (game.bet * 2);
+  this.hit(this.plCards, 'pHand');
+  this.dlTurn();
+  this.bet = (game.bet/2);
 },
 
 
@@ -283,23 +291,14 @@ toggleDisableStates: function(state){
 
 
 
-//NEED TO set dealer's card to reveal on win - may need to reimplement HTML and use z-index? 
 
-//For all button issues - create states for buttons, have button greyed out and inclickable when not supposed to be pressed - also replace reset with delete after win state
-
-//Should not be able to hit reset button in the middle of the game - hide, or disable while game is played 
-
-//should only be able to hit doubledown on the first card, right? 
+//REDESIGN NOTE - Need to create a gameEnd function that handles dealer reveal, winner deciding, and state changes. This model has too many things happening after the user turn. This complexity introduces bugs
 
 //need to add something to happen when pbank hits 0 - need to restart 
 
 //See Animation section of FCC to figure out how to have card animations 
 
 //add sum display 
-
-///upon winner or blackjack - should disable buttons - can currently hit them - could create a "game over" state that disables or hides all but the deal buttons 
-
-//needs to include zeroing out and ending the game at that point
 
 //How do I remember who visited the site and keep their bankroll the same? Is this possible? 
 

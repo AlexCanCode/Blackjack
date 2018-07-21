@@ -64,16 +64,26 @@
     </div>   
     <form id="betting-form">
       Bet
-      <input id="bet-amount" type="number" name="bet" min="10" max="100" step="10" value="50"></input>
+      <input id="bet-amount" type="range" name="bet" min="10" max="100" step="10" value="50"></input>
+      <p id="bet-value"></p>
     </form>
   </div>
+
   <div id=logger>
   <p id="log"></p>
   </div>
 
 </body>
-<script> 
+<script type="text/javascript"> 
       document.getElementById("pBank-num").innerHTML =  game.pBank;
+  </script>
+  <script type="text/javascript">
+    let slider = document.getElementById("bet-amount");
+    let output = document.getElementById("bet-value");
+
+    slider.oninput = function() {
+      output.innerHTML = this.value;
+    }
   </script>
 </html>
 
