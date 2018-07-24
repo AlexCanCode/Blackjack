@@ -1,0 +1,25 @@
+Next Redesign Notes and To-Do
+
+As a first web project, this taught me a lot about DOM interactions and web design. Coming back to this project later with more knowledge will allow me to do it "more right". The following are ideas I would like to incorporate:
+
+- A simpler gameEnd funciton that handles dealer reveal, winner deciding, and state changes. These are all a bit copmplicated now. 
+
+- Set an event for when bankroll reaches 0
+
+- Add animations and transitions so the game doesn't feel so abrupt
+
+- Track the users who play so you can save an retain bankroll information 
+
+- Hide inputs so that DOM manipulation cannot hack the game
+
+- Fix spacing issue with dealer-sum-box
+
+- make responsive for mobile use
+
+- Improve styling of betting area
+
+- Add chips to increment and decrement the bet
+
+- Add chip animations
+
+- Find a better card back image for unseen dealer card
