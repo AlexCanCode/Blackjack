@@ -49,6 +49,8 @@ let game = {
           cardVals[0].style.color = "red";
           cardVals[1].style.color = "red";
         }
+        document.getElementById("dealer-sum").innerHTML = "Dealer has at least " + (this.sum(this.dlCards) - this.dlCards[0]);
+        document.getElementById("player-sum").innerHTML = "You have " + this.sum(this.plCards);
   },
   hit: function(arr, hand) {
           	 if(this.plCards.length === 0){
@@ -60,6 +62,8 @@ let game = {
             game.newCards(newNum, hand, this.getSuit());
             this.bustCheck(this.sum(this.plCards), this.sum(this.dlCards))
         }
+        document.getElementById("dealer-sum").innerHTML = "Dealer has " + this.sum(this.dlCards)
+        document.getElementById("player-sum").innerHTML = "You have " + this.sum(this.plCards);
   },
   sum: function(arr){
      	const sumHand = arr.reduce((all, item) =>	all += item);
@@ -292,17 +296,7 @@ toggleDisableStates: function(state){
 
 
 
-//REDESIGN NOTE - Need to create a gameEnd function that handles dealer reveal, winner deciding, and state changes. This model has too many things happening after the user turn. This complexity introduces bugs
 
-//need to add something to happen when pbank hits 0 - need to restart 
-
-//See Animation section of FCC to figure out how to have card animations 
-
-//add sum display 
-
-//How do I remember who visited the site and keep their bankroll the same? Is this possible? 
-
-//how do I hide the inputs from users to prevent manipulation? 
 
 
 

@@ -9,71 +9,88 @@
 
 <body>
   <div id="top">
-    <h1>Lets Play BlackJack!</h1>
+    <h1>Let's Play Blackjack</h1>
   </div>
 
-  <div id="game-div">
-    <div id="left">
-    </div>
-      <h4 class="hand-headings">Dealer's Cards</h4>
-      <div id="dHand">
-        <div id="dCardOne" class="hand cardBack">
-          <div class="card1 cardVal hidden hCard"></div>
-          <div class="card2 hidden hCard"></div>
-          <div class="card3 cardVal hidden hCard"></div>
-        </div>
-          <div id="dCardTwo" class="hand">
-          <div class="card1 cardVal"></div>
-          <div class="card2"></div>
-          <div class="card3 cardVal"></div>
-        </div>
-      </div>
-   
-     <div id="divider">
-       
-      </div>
+  <div id="game-container">
+      <div id="player">
       <h4 class="hand-headings">Your Cards</h4>
-      <div id="pHand">  
-        <div id="pCardOne" class="hand">
-          <div class="card1 cardVal"></div>
-          <div class="card2"></div>
-          <div class="card3 cardVal"></div>
+      <div class="row-container">
+        <div class="left">
+            <p class="sum-box" id="dealer-sum"></p> 
         </div>
-        <div id="pCardTwo" class="hand">
-          <div class="card1 cardVal"></div>
-          <div class="card2"></div>
-          <div class="card3 cardVal"></div>
+        <div class="center"> 
+          <div id="dHand" class="hand-container">
+          <div id="dCardOne" class="hand cardBack">
+            <div class="card1 cardVal hidden hCard"></div>
+            <div class="card2 hidden hCard"></div>
+            <div class="card3 cardVal hidden hCard"></div>
+          </div>
+            <div id="dCardTwo" class="hand">
+            <div class="card1 cardVal"></div>
+            <div class="card2"></div>
+            <div class="card3 cardVal"></div>
+          </div>
         </div>
-       </div>
-  
-
-    <div id="right">
+        </div>
+        <div class="right"> 
+            <div id="betting-container">
+              <div id="pBank">
+                <p>Bankroll: <span id="pBank-num"></span></p>
+              </div>   
+            <form id="betting-form">
+              Bet
+              <input id="bet-amount" type="range" name="bet" min="10" max="100" step="10" value="50"></input>
+              <p id="bet-value">50</p>
+            </form>
+  </div>
+        </div>
       </div>
-    <div id="buttons">
-        <button id="deal" type= "button" onclick="javascript: game.deal();"> Deal</button>
-        <button id="hit" type= "button" onclick="javascript: game.hit(game.plCards, 'pHand');">Hit</button>
-        <button id="stay" type= "button" onclick="javascript: game.dlTurn()">Stay</button>
-        <button id="double-down" type= "button" onclick="javascript: game.doubleDown()">Double-Down</button>
     </div>
+
+
+    <div id="hand-divider">
+      <div id="log">
+      
+      </div>
+    </div>
+
+
+   <div id="player">
+      <h4 class="hand-headings">Your Cards</h4>
+      <div class="row-container">
+        <div class="left">
+            <p class="sum-box" id="player-sum"></p> 
+        </div>
+        <div class="center"> 
+          <div id="pHand" class="hand-container">
+          <div id="pCardOne" class="hand">
+            <div class="card1 cardVal"></div>
+            <div class="card2"></div>
+            <div class="card3 cardVal"></div>
+          </div>
+            <div id="pCardTwo" class="hand">
+            <div class="card1 cardVal"></div>
+            <div class="card2"></div>
+            <div class="card3 cardVal"></div>
+          </div>
+        </div>
+        </div>
+        <div class="right"> </div>
+      </div>
+    </div>
+
+  <div id="buttons">
+          <button id="deal" type= "button" onclick="javascript: game.deal();"> Deal</button>
+          <button id="hit" type= "button" disabled="true" onclick="javascript: game.hit(game.plCards, 'pHand');">Hit</button>
+          <button id="stay" type= "button" disabled="true" onclick="javascript: game.dlTurn()">Stay</button>
+          <button id="double-down" type= "button" disabled="true" onclick="javascript: game.doubleDown()">Double-Down</button>
+      </div>
+
+  </div>
    
-  </div>
-
-  <div id="betting-container">
-    <div id="pBank">
-      <p id="pBank-num"></p>
-    </div>   
-    <form id="betting-form">
-      Bet
-      <input id="bet-amount" type="range" name="bet" min="10" max="100" step="10" value="50"></input>
-      <p id="bet-value"></p>
-    </form>
-  </div>
-
-  <div id=logger>
-  <p id="log"></p>
-  </div>
-
 </body>
+
 <script type="text/javascript"> 
       document.getElementById("pBank-num").innerHTML =  game.pBank;
   </script>

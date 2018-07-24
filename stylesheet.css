@@ -1,11 +1,13 @@
-
-/*Try to center number/letter with Suit better - for instance Aces do not center on suit*/
-
 * {
   padding: 0px;
   margin: 0px;
-  background: #008000;
-  font-family: arial;
+  font-family: verdana;
+
+}
+
+html {
+   background-image: url("C:/Users/arichards/Documents/P Files/Learning/Projects/1 - BlackJack/img/blackjack-background.jpg");
+ background-size: cover;
 }
 
 :root {
@@ -15,16 +17,20 @@
   --card-border-radius: .2em;
 }
 
-#top{
-  margin: 1em;
-  text-align: center;
+#top {
   color: #800000;
+  text-align: center;
+  margin: 1em;
 }
 
-#game-div {
-  text-align: center;
-  }
+h4 {
+  color: #daa520;
+  font-size: 1.5em;
+}
 
+#game-container {
+  text-align: center;
+}
 
 .hand {
   display: inline-block;
@@ -39,15 +45,63 @@
   overflow: hidden;
  }
 
-.hand-headings{
-  margin: 0px;
-  padding: 0px;
- 
+.row-container {
+  display: inline-flex;
+  height: 33%;
+  width: 100%;
 }
 
-h4 {
-  color: #daa520;
+.left {
+  align-items: center;
+  width: 33%;
+}
+
+.center {
+  text-align: center;
+  width: 34%;
+}
+
+.right {
+  width: 33%;
+}
+
+.hand-container {
+  display: flex;
+  justify-content: center;
+}
+
+#hand-divider {
+  height: 3em; 
+  line-height: 3em;
+}
+
+#log{
+  text-align: center;
+  font-family: sans-serif;
+  color: #800000;
   font-size: 1.5em;
+  background: #a7adba; 
+  opacity: .8;
+}
+
+.sum-box {
+  position: relative;
+  width: 5em;
+  height: 3em;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: 10%;
+  margin-top: 8%;;
+  padding: 5%;
+  text-align: center;
+  background-color: #fff;
+  border: 2px solid #666;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  -webkit-box-shadow: 2px 2px 2px #888;
+  -moz-box-shadow: 2px 2px 2px #888;
+  box-shadow: 2px 2px 2px #888;
 }
 
 button{
@@ -67,45 +121,24 @@ button:hover {
   background: #700000;
 }
 
+button:active{
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+button:disabled {
+  opacity: 0.65;
+}
+
+
 .winningHand {
   border: solid;
   border-width: .25em;
   border-color: #800000;
 }
 
-#divider{
-  height: 4em;
-}
-
-#display{
-  text-align: center;
-   }
-
-button:active{
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-
-#logger{
-  height: 5em;
-}
-
-#log{
-  text-align: center;
-  font-family: sans-serif;
-  font-weight: bold;
-  line-height: 5em;
-  color: #800000;
-  font-size: 2em;
-}
-
 #pBank-num {
   color: #800000;
-}
-
-
-.hand div{
-  background: white;
 }
 
 
@@ -126,7 +159,6 @@ button:active{
 
 .card3 {
   text-align: right;
-  background: red;
   margin-right: 5%;
   margin-bottom: 5%;
   height: 20%;
@@ -141,12 +173,12 @@ button:active{
   border-width: 0px
   }
 
-button:disabled {
-  opacity: 0.65;
-}
-
 .hidden {
   visibility: hidden;
+  }
+
+  #betting-container {
+    margin-right: 50%;
   }
 
   #bet-amount {
@@ -179,3 +211,4 @@ button:disabled {
     background: #4CAF50;
     cursor: pointer;
 }
+
