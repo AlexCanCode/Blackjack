@@ -6,8 +6,8 @@
 }
 
 html {
-   background-image: url("C:/Users/arichards/Documents/P Files/Learning/Projects/1 - BlackJack/img/blackjack-background.jpg");
- background-size: cover;
+  background-image: url("https://github.com/AlexCanCode/Blackjack/blob/master/img/blackjack-background.jpg?raw=true");
+  background-size: cover;
 }
 
 :root {
@@ -139,6 +139,7 @@ button:disabled {
 
 #pBank-num {
   color: #800000;
+  font-weight: bold;
 }
 
 
@@ -168,7 +169,7 @@ button:disabled {
 }
 
 .cardBack {
-  background: url("C:/Users/arichards/Documents/P Files/Learning/Projects/1 - BlackJack/img/cardBack.jpg");
+  background: url("https://github.com/AlexCanCode/Blackjack/blob/master/img/cardBack.jpg?raw=true");
   background-size: cover;
   border-width: 0px
   }
@@ -178,12 +179,13 @@ button:disabled {
   }
 
   #betting-container {
-    margin-right: 50%;
+    margin-right: 60%;
+    margin-top: 15%;
   }
 
   #bet-amount {
     -webkit-appearance: none;
-    width: 50%;
+    width: 100%;
     height: 25px;
     background: #d3d3d3; /* CHANGE */
     outline: none;
