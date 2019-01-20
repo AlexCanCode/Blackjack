@@ -53,17 +53,17 @@ let game = {
         document.getElementById("player-sum").innerHTML = "You have " + this.sum(this.plCards);
   },
   hit: function(arr, hand) {
-          	 if(this.plCards.length === 0){
-            return false
-            }
-            else {
-            const newNum = this.random();
-            arr.push(newNum);
-            game.newCards(newNum, hand, this.getSuit());
-            this.bustCheck(this.sum(this.plCards), this.sum(this.dlCards))
+      if(this.plCards.length === 0){
+        return false
+      }
+      else {
+        const newNum = this.random();
+        arr.push(newNum);
+        game.newCards(newNum, hand, this.getSuit());
+        this.bustCheck(this.sum(this.plCards), this.sum(this.dlCards))
         }
-        document.getElementById("dealer-sum").innerHTML = "Dealer has " + this.sum(this.dlCards)
-        document.getElementById("player-sum").innerHTML = "You have " + this.sum(this.plCards);
+      document.getElementById("dealer-sum").innerHTML = "Dealer has at least " + (this.sum(this.dlCards) - this.dlCards[0])
+      document.getElementById("player-sum").innerHTML = "You have " + this.sum(this.plCards);
   },
   sum: function(arr){
      	const sumHand = arr.reduce((all, item) =>	all += item);
@@ -87,59 +87,61 @@ let game = {
       }
     }, 
   dlTurn: function (){
+    document.getElementById("dealer-sum").innerHTML = "Dealer has " + this.sum(this.dlCards)
     document.querySelectorAll(".hidden").forEach(element => element.classList.toggle("hidden"));
     document.querySelector(".cardBack").classList.toggle("cardBack");
     this.toggleDisableStates("start");
-    this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne"); 
+    this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne");
     if(this.sum(this.plCards)> 21){
         return false
       }
          else {
          while (this.sum(this.dlCards) < 17){
-           game.hit(this.dlCards, "dHand");
+            game.hit(this.dlCards, "dHand");
+            document.getElementById("dealer-sum").innerHTML = "Dealer has " + this.sum(this.dlCards)
            }
         this.decider(this.sum(this.plCards), this.sum(this.dlCards));
         }
     },
-newCards: function(num, hand, suit){//**** This is messy. Investigate a better way to do this - Make sure it is supportable accross browsers
-  const handCont = document.getElementById(hand);
-  const divHand = document.createElement("div")
-  const divOne = document.createElement("div");
-  const divTwo = document.createElement("div");
-  const divThree = document.createElement("div");
-  const brkOne = document.createElement("br");
-  const brkTwo = document.createElement("br");
-  
-  divHand.setAttribute("class", "hand")
-  divOne.setAttribute("class", "card1 cardVal")
-  divTwo.setAttribute("class", "card2")
-  divThree.setAttribute("class", "card3 cardVal")
+  newCards: function(num, hand, suit){//**** This is messy. Investigate a better way to do this - Make sure it is supportable accross browsers
+    const handCont = document.getElementById(hand);
+    const divHand = document.createElement("div")
+    const divOne = document.createElement("div");
+    const divTwo = document.createElement("div");
+    const divThree = document.createElement("div");
+    const brkOne = document.createElement("br");
+    const brkTwo = document.createElement("br");
+    
+    divHand.setAttribute("class", "hand")
+    divOne.setAttribute("class", "card1 cardVal")
+    divTwo.setAttribute("class", "card2")
+    divThree.setAttribute("class", "card3 cardVal")
 
-   if(suit == "hearts" || suit == "diamonds"){
-      divOne.style.color = "red";
-      divThree.style.color = "red";
-          }
+     if(suit == "hearts" || suit == "diamonds"){
+        divOne.style.color = "red";
+        divThree.style.color = "red";
+            }
 
-  const nodeNum = document.createTextNode((game.deckRender(num)));
-  const nodeSuit = document.createTextNode(suits[suit]);
+    const nodeNum = document.createTextNode((game.deckRender(num)));
+    const nodeSuit = document.createTextNode(suits[suit]);
 
-  divOne.appendChild(nodeNum);
-  divOne.appendChild(brkOne);
-  divOne.appendChild(nodeSuit);
+    divOne.appendChild(nodeNum);
+    divOne.appendChild(brkOne);
+    divOne.appendChild(nodeSuit);
 
-  const nodeNumTwo = document.createTextNode((game.deckRender(num)));
-  const nodeSuitTwo = document.createTextNode(suits[suit]);
+    const nodeNumTwo = document.createTextNode((game.deckRender(num)));
+    const nodeSuitTwo = document.createTextNode(suits[suit]);
 
-  divThree.appendChild(nodeSuitTwo);
-  divThree.appendChild(brkTwo);
-  divThree.appendChild(nodeNumTwo);
+    divThree.appendChild(nodeSuitTwo);
+    divThree.appendChild(brkTwo);
+    divThree.appendChild(nodeNumTwo);
 
-  divHand.appendChild(divOne);
-  divHand.appendChild(divTwo);
-  divHand.appendChild(divThree);
+    divHand.appendChild(divOne);
+    divHand.appendChild(divTwo);
+    divHand.appendChild(divThree);
 
-  handCont.appendChild(divHand);
-  },
+    handCont.appendChild(divHand);
+    },
   deckRender: function(num){
   if (num < 10){
     return num
