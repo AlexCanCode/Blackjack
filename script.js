@@ -38,7 +38,11 @@ let game = {
   
      game.bet = document.getElementById("bet-amount").value;
      this.toggleDisableStates("gameplay")
+     document.getElementById("dealer-sum").innerHTML = "Dealer has at least " + (this.sum(this.dlCards) - this.dlCards[0]);
+    document.getElementById("player-sum").innerHTML = "You have " + this.sum(this.plCards);
      this.bjDecider(this.sum(this.plCards),this.sum(this.dlCards));
+        
+
     },
   addCardValues: function(value, suit, location){
         const cardVals = document.querySelector(location).querySelectorAll('.cardVal');
@@ -49,8 +53,7 @@ let game = {
           cardVals[0].style.color = "red";
           cardVals[1].style.color = "red";
         }
-        document.getElementById("dealer-sum").innerHTML = "Dealer has at least " + (this.sum(this.dlCards) - this.dlCards[0]);
-        document.getElementById("player-sum").innerHTML = "You have " + this.sum(this.plCards);
+        
   },
   hit: function(arr, hand) {
       if(this.plCards.length === 0){
@@ -93,6 +96,7 @@ let game = {
     this.toggleDisableStates("start");
     this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne");
     if(this.sum(this.plCards)> 21){
+        document.getElementById("dealer-sum").innerHTML = "Dealer has " + this.sum(this.dlCards)
         return false
       }
          else {
@@ -100,6 +104,7 @@ let game = {
             game.hit(this.dlCards, "dHand");
             document.getElementById("dealer-sum").innerHTML = "Dealer has " + this.sum(this.dlCards)
            }
+        document.getElementById("dealer-sum").innerHTML = "Dealer has " + this.sum(this.dlCards)
         this.decider(this.sum(this.plCards), this.sum(this.dlCards));
         }
     },
@@ -246,6 +251,7 @@ let game = {
       this.toggleDisableStates("start");
       this.addCardValues(this.deckRender(game.dlCards[0]), (suits[this.getSuit()]), "#dCardOne");
       document.querySelectorAll(".hidden").forEach(element => element.classList.toggle("hidden"));
+      document.getElementById("dealer-sum").innerHTML = "Dealer has " + this.sum(this.dlCards)
       this.result(0, "You Busted, Dealer Wins");
       this.winner("dHand");
     }
