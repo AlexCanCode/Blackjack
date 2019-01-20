@@ -6,8 +6,10 @@
 }
 
 html {
-   background-image: url("C:/Users/arichards/Documents/P Files/Learning/Projects/1 - BlackJack/img/blackjack-background.jpg");
+  background-image: url("./img/blackjack-background.jpg");
  background-size: cover;
+ height: 100%;
+ width: auto;
 }
 
 :root {
@@ -168,7 +170,7 @@ button:disabled {
 }
 
 .cardBack {
-  background: url("C:/Users/arichards/Documents/P Files/Learning/Projects/1 - BlackJack/img/cardBack.jpg");
+  background: url("./img/cardBack.jpg");
   background-size: cover;
   border-width: 0px
   }
