@@ -26,3 +26,5 @@ As a first web project, this taught me a lot about DOM interactions and web desi
 
 - Find a better card back image for unseen dealer card
 
+- BUG - Reveals what dealer has when you hit deal
+
